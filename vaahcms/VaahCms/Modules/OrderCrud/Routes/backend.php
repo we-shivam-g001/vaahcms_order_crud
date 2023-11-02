@@ -28,6 +28,7 @@ Route::group(
         //------------------------------------------------
     });
 
+include('backend/routes-orders.php');
 
 /*
  * Include CRUD Routes
