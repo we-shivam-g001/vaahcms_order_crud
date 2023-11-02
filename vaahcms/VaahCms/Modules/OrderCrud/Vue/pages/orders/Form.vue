@@ -153,6 +153,51 @@ const toggleFormMenu = (event) => {
                                  data-testid="orders-active"
                                  v-model="store.item.is_active"/>
                 </VhField>
+                <VhField label="Status">
+                    <Dropdown class="p-dropdown-sm"
+                              :options="store.order_status"
+                              name="orders-status"
+                              data-testid="orders-status"
+                              v-model="store.item.status"
+                              placeholder="Select a status"/>
+                </VhField>
+
+                <VhField label="Amount">
+                    <InputNumber class="w-full"
+                                 name="orders-price"
+                                 data-testid="orders-price"
+                                 v-model="store.item.amount"
+                                 inputId="stacked-buttons"
+                                 showButtons
+                                 mode="currency"
+                                 currency="INR"
+                                 style="height: 35px;"
+                    />
+                </VhField>
+
+                <VhField label="Tax">
+                    <InputNumber class="w-full"
+                               name="orders-tax"
+                               data-testid="orders-tax"
+                               v-model="store.item.tax"
+                                 inputId="stacked-buttons"
+                                 mode="currency"
+                                 currency="INR"
+                                 style="height: 35px;"
+                    />
+                </VhField>
+
+                <VhField label="Total Amount">
+                    <InputNumber class="w-full"
+                               name="orders-total_amount"
+                               data-testid="orders-total_amount"
+                               v-model="store.item.total_amount"
+                                 inputId="stacked-buttons"
+                                 mode="currency"
+                                 currency="INR"
+                                 style="height: 35px;"
+                    />
+                </VhField>
 
             </div>
         </Panel>
