@@ -63,6 +63,7 @@ export const useOrderStore = defineStore({
         list_selected_menu: [],
         list_bulk_menu: [],
         list_create_menu: [],
+        list_bulk_menu_status:[],
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
@@ -735,6 +736,39 @@ export const useOrderStore = defineStore({
                 },
             ]
 
+        },
+        getListBulkStatus(){
+          this.list_bulk_menu_status=[
+              {
+                  label:'Mark Status as In Stock',
+                  command:async ()=>{
+                      await this.listAction('In-stock')
+                  },
+
+              },
+              {
+                  label:'Mark Status as Out of Stock',
+                  command:async ()=>{
+                      await this.listAction('Out-of-Stock')
+                  },
+
+              },
+              {
+                  label:'Mark Status as pending',
+                  command:async ()=>{
+                      await this.listAction('pending')
+                  },
+
+              },
+              {
+                  label:'Mark Status as Processing',
+                  command:async ()=>{
+                      await this.listAction('Processing')
+                  },
+
+              },
+
+          ];
         },
         //---------------------------------------------------------------------
         getListBulkMenu()

@@ -9,6 +9,7 @@ const store = useOrderStore();
 onMounted(async () => {
     store.getListSelectedMenu();
     store.getListBulkMenu();
+    store.getListBulkStatus();
 });
 
 //--------selected_menu_state
@@ -22,6 +23,10 @@ const toggleSelectedMenuState = (event) => {
 const bulk_menu_state = ref();
 const toggleBulkMenuState = (event) => {
     bulk_menu_state.value.toggle(event);
+};
+const bulk_menu_status= ref();
+const toggleBulkMenuStatus = (event) => {
+    bulk_menu_status.value.toggle(event);
 };
 //--------/bulk_menu_state
 </script>
@@ -63,12 +68,28 @@ const toggleBulkMenuState = (event) => {
                 </Button>
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"
-                      :popup="true" />
+                      :popup="true"
+                />
                 <!--/bulk_menu-->
+
 
             </div>
             <!--/left-->
+<div>
+    <Button
+        type="button"
+        @click="toggleBulkMenuStatus"
+        data-testid="orders-actions-bulk-status"
+        aria-haspopup="true"
+        aria-controls="bulk_menu_status"
+        class="ml-1 p-button-sm bg-indigo-100">
 
+        <i class="pi pi-ellipsis-h"></i>
+    </Button>
+    <Menu ref="bulk_menu_status"
+          :model="store.list_bulk_menu_status"
+          :popup="true" />
+</div>
             <!--right-->
             <div >
 
