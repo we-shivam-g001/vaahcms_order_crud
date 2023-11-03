@@ -26,6 +26,7 @@ class PrOrders extends Migration
                 $table->string('amount')->nullable()->index();
                 $table->string('tax')->nullable()->index();
                 $table->string('total_amount')->nullable()->index();
+                $table->string('quantity')->nullable()->index();
 
 
                 //----common fields

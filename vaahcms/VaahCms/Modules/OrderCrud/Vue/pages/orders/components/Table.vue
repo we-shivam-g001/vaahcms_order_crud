@@ -5,6 +5,24 @@ import { useOrderStore } from '../../../stores/store-orders'
 const store = useOrderStore();
 const useVaah = vaah();
 
+const toggleDropdown = (slotProps) => {
+    slotProps.data.showDropdown = !slotProps.data.showDropdown;
+};
+function getSeverity(product) {
+    switch (product.status) {
+        case 'In Stock':
+            return 'success';
+        case 'A few left':
+            return 'warning';
+        case 'Out of stock':
+            return 'danger';
+            case 'pending':
+            return 'info';
+        default:
+            return null;
+    }
+}
+
 </script>
 
 <template>
@@ -26,17 +44,56 @@ const useVaah = vaah();
             <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
             </Column>
 
-            <Column field="name" header="Name"
-                    :sortable="true">
+             <Column field="name" header="Name" :sortable="true">
+                 <template #body="prop">
+                     <Badge v-if="prop.data.deleted_at" value="Trashed" severity="danger"></Badge>
+                     {{ prop.data.name }} ({{ prop.data.quantity }})
+                 </template>
+             </Column>
+             <Column field="status" header="Status" style="width:150px;" :sortable="true">
+                 <template #body="slotProps">
+                     <div @click="toggleDropdown(slotProps)">
+                         <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)" />
+                     </div>
+                         <Dropdown v-if="slotProps.data.showDropdown"
+                                   :options="store.order_status"
+                                   v-model="slotProps.data.status"
+                                   class="p-dropdown-sm"
+                                   @change="store.updateStatus(slotProps.data)">
+                         </Dropdown>
 
-                <template #body="prop">
-                    <Badge v-if="prop.data.deleted_at"
-                           value="Trashed"
-                           severity="danger"></Badge>
-                    {{prop.data.name}}
-                </template>
+                 </template>
+             </Column>
 
-            </Column>
+             <Column field="amount" header="Amount"
+                     style="width:150px;"
+                     :class="'text-left'"
+                     :sortable="true">
+
+                 <template #body="props">
+                     &#8377 {{ props.data.amount }}
+                 </template>
+
+             </Column>
+
+             <Column field="tax" header="Tax"
+                     v-if="store.isViewLarge()"
+                     style="width:150px;"
+                     :sortable="true">
+                 <template #body="props">
+                     &#8377 {{ props.data.tax }}
+                 </template>
+
+             </Column>
+
+             <Column field="total_amount" header="Total Amount"
+                     v-if="store.isViewLarge()"
+                     style="width:150px;"
+                     :sortable="true" >
+                 <template #body="props">
+                     &#8377 {{ props.data.total_amount }}
+                 </template>
+             </Column>
 
 
                 <Column field="updated_at" header="Updated"

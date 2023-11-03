@@ -34,6 +34,7 @@ class Order extends Model
         'amount',
         'tax',
         'total_amount',
+        'quantity',
         'is_active',
         'created_by',
         'updated_by',
@@ -268,6 +269,16 @@ class Order extends Model
         });
 
     }
+    public function scopeOrderStatusFilter($query, $filter)
+    {
+        if (!isset($filter['status']) || empty($filter['status'])) {
+            return $query;
+        }
+
+        $status_slugs = $filter['status'];
+
+        return $query->whereIn('status', $status_slugs);
+    }
     //-------------------------------------------------
     public static function getList($request)
     {
@@ -275,6 +286,7 @@ class Order extends Model
         $list->isActiveFilter($request->filter);
         $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
+        $list->OrderStatusFilter($request->filter);
 
         $rows = config('vaahcms.per_page');
 
@@ -593,6 +605,8 @@ class Order extends Model
         $rules = array(
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
+            'quantity' => 'required',
+            'amount' => ['required', 'regex:/^\d+(.\d{1,3})?$/'],
         );
 
         $validator = \Validator::make($inputs, $rules);
@@ -667,6 +681,29 @@ class Order extends Model
         $response['data']['fill'] = $inputs;
         return $response;
     }
+
+
+
+
+        public static function updateStatus($request): array
+        {
+            $id = $request->id;
+            $status = $request->status;
+
+            $item = self::where('id', $id)->withTrashed()->first();
+            $item->update(['status' => $status]);
+            $item->save();
+
+            $response = self::getItem($item->id);
+            $response['messages'][] = 'Saved successfully.';
+            return $response;
+
+        }
+
+
+
+
+
 
     //-------------------------------------------------
     //-------------------------------------------------

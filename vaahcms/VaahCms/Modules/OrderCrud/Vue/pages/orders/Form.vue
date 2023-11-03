@@ -16,7 +16,9 @@ onMounted(async () => {
     }
 
     await store.getFormMenu();
+
 });
+
 
 //--------form_menu
 const form_menu = ref();
@@ -24,7 +26,10 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
-// store.item.quantity=1;
+store.item.status='processing';
+
+
+
 
 </script>
 <template>
@@ -163,44 +168,40 @@ const toggleFormMenu = (event) => {
                               placeholder="Select a status"/>
                 </VhField>
 
+                <VhField label="Quantity">
+                    <InputNumber class="w-full"
+                                 name="orders-quantity"
+                                 data-testid="orders-quantity"
+                                 v-model="store.item.quantity"
+                                 inputId="stacked-buttons"
+                                 style="height: 35px;"
+                                 @input="store.watchQuantity"
+
+                    />
+                </VhField>
+
                 <VhField label="Amount">
                     <InputNumber class="w-full"
                                  name="orders-price"
                                  data-testid="orders-price"
-                                 @input="store.watchAmount"
+
                                  v-model="store.item.amount"
                                  inputId="stacked-buttons"
                                  showButtons
                                  mode="currency"
                                  currency="INR"
                                  style="height: 35px;"
-                    />
-                </VhField>
-<!--                <VhField label="Quantity">-->
-<!--                    <InputNumber class="w-full"-->
-<!--                                 name="orders-quantity"-->
-<!--                                 data-testid="orders-quantity"-->
-<!--                                 v-model="store.item.quantity"-->
-<!--                                 inputId="stacked-buttons"-->
-<!--                                 style="height: 35px;"-->
-<!--                    />-->
-<!--                </VhField>-->
-                <VhField label="Quantity">
-                    <InputNumber class="w-full"
-                                 name="orders-quantity"
-                                 @input="store.updateQuantity"
-                                 data-testid="orders-quantity"
-                                 v-model="store.item.quantity"
-                                 inputId="stacked-buttons"
-                                 style="height: 35px;"
+                                 @input="store.watchAmount"
                     />
                 </VhField>
 
+
+
                 <VhField label="Tax">
                     <InputNumber class="w-full"
-                               name="orders-tax"
-                               data-testid="orders-tax"
-                               v-model="store.item.tax"
+                                 name="orders-tax"
+                                 data-testid="orders-tax"
+                                 v-model="store.item.tax"
                                  inputId="stacked-buttons"
                                  mode="currency"
                                  currency="INR"
@@ -211,9 +212,9 @@ const toggleFormMenu = (event) => {
 
                 <VhField label="Total Amount">
                     <InputNumber class="w-full"
-                               name="orders-total_amount"
-                               data-testid="orders-total_amount"
-                               v-model="store.item.total_amount"
+                                 name="orders-total_amount"
+                                 data-testid="orders-total_amount"
+                                 v-model="store.item.total_amount"
                                  inputId="stacked-buttons"
                                  mode="currency"
                                  currency="INR"

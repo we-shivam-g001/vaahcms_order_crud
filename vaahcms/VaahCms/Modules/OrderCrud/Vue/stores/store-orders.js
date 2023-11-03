@@ -71,6 +71,7 @@ export const useOrderStore = defineStore({
     getters: {
 
     },
+
     actions: {
         //---------------------------------------------------------------------
         async onLoad(route)
@@ -164,11 +165,34 @@ export const useOrderStore = defineStore({
           },
 
         watchAmount(amount) {
-            if (amount || amount.value !== null) {
-                this.item.tax = this.calculateTax(amount.value, this.item.quantity);
-                this.item.total_amount = this.calculateTotal(amount.value, this.item.quantity);
+            const parsedAmount = parseFloat(amount.value);
+            const parsedQuantity = parseFloat(this.item.quantity);
+
+            if (parsedAmount && parsedQuantity) {
+                this.item.tax = this.updateTaxAndTotalAmount(parsedAmount, parsedQuantity).tax;
+                this.item.total_amount = this.updateTaxAndTotalAmount(parsedAmount, parsedQuantity).totalAmount;
                 console.log(this.item.tax, this.item.total_amount, this.item.quantity);
             }
+            else {
+                this.item.tax=null;
+                this.item.total_amount=null;
+                // this.item.quantity=null;
+
+            }
+        },
+        watchQuantity(quantity){
+            const parsedQuantity = parseFloat(quantity.value);
+            const parsedAmount = parseFloat(this.item.amount);
+            if (parsedAmount && parsedQuantity) {
+                this.item.tax = this.updateTaxAndTotalAmount(parsedAmount, parsedQuantity).tax;
+                this.item.total_amount = this.updateTaxAndTotalAmount(parsedAmount, parsedQuantity).totalAmount;
+                console.log(this.item.tax, this.item.total_amount, this.item.quantity);
+            }else {
+                this.item.tax=null;
+                this.item.total_amount=null;
+            }
+
+
         },
 
         //---------------------------------------------------------------------
@@ -925,23 +949,45 @@ export const useOrderStore = defineStore({
             this.form_menu_list = form_menu;
 
         },
-        calculateTax(amount, quantity) {
-            if (amount !== null && quantity !== null) {
-                let tax = (parseFloat(amount) * quantity * 10) / 100;
-                return tax;
+
+        updateTaxAndTotalAmount(amount, quantity) {
+            if (!isNaN(amount) && !isNaN(quantity)) {
+                const tax = (amount * quantity * 10) / 100;
+                const totalAmount = amount * quantity + tax;
+                return { tax, totalAmount };
+            } else {
+                return null;
             }
-            return null;
         },
 
-        calculateTotal(amount, quantity) {
-            if (amount !== null && quantity !== null) {
-                let calculatedAmount = parseFloat(amount) * quantity + this.calculateTax(amount, quantity);
-                return calculatedAmount;
+
+        async updateStatus(item){
+            let query = {
+                id:item.id,
+                status:item.status
             }
-            return null;
+            let method = 'PUT';
+            let options = {
+                params: query,
+                method: method
+            };
+            console.log(options);
+            let url = this.ajax_url + '/update-status';
+            await vaah().ajax(
+                url,
+            this.afterUpdateStatus,
+                options,
+            );
+            item.showDropdown = false;
         },
+        afterUpdateStatus(data){
+console.log(data);
+        },
+
+
         //---------------------------------------------------------------------
-    }
+    },
+
 });
 
 
