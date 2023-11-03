@@ -34,6 +34,7 @@ class Order extends Model
         'amount',
         'tax',
         'total_amount',
+        'quantity',
         'is_active',
         'created_by',
         'updated_by',
