@@ -192,6 +192,7 @@ watch(form_menu, (newVal) => {
                                  v-model="store.item.quantity"
                                  inputId="stacked-buttons"
                                  style="height: 35px;"
+                                 @input="store.watchQuantity"
 
                     />
                 </VhField>
@@ -207,7 +208,7 @@ watch(form_menu, (newVal) => {
                                  mode="currency"
                                  currency="INR"
                                  style="height: 35px;"
-                                 @update:modelValue="store.watchAmount"
+                                 @input="store.watchAmount"
                     />
                 </VhField>
 
