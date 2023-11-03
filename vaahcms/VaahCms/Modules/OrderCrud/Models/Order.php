@@ -420,6 +420,19 @@ class Order extends Model
         }
 
         switch ($type) {
+            case 'In-stock':
+                $list->update(['status' => 'In stock']);
+                break;
+            case 'Out-of-Stock':
+                $list->update(['status' => 'Out of stock']);
+                break;
+            case 'pending':
+                $list->update(['status' => 'pending']);
+                break;
+            case 'Processing':
+                $list->update(['status' => 'processing']);
+                break;
+
             case 'deactivate':
                 if($items->count() > 0) {
                     $items->update(['is_active' => null]);
@@ -448,6 +461,7 @@ class Order extends Model
             case 'activate-all':
                 $list->update(['is_active' => 1]);
                 break;
+
             case 'deactivate-all':
                 $list->update(['is_active' => null]);
                 break;
