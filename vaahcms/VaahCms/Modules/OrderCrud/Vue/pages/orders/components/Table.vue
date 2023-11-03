@@ -4,6 +4,20 @@ import { useOrderStore } from '../../../stores/store-orders'
 
 const store = useOrderStore();
 const useVaah = vaah();
+function getSeverity(product) {
+    switch (product.status) {
+        case 'In Stock':
+            return 'success';
+        case 'A few left':
+            return 'warning';
+        case 'Out of stock':
+            return 'danger';
+            case 'pending':
+            return 'info';
+        default:
+            return null;
+    }
+}
 
 </script>
 
@@ -37,6 +51,30 @@ const useVaah = vaah();
                 </template>
 
             </Column>
+             <Column field="status" header="Status"
+                     style="width:150px;"
+                     :sortable="true">
+                 <template #body="slotProps">
+                     <Tag :value="slotProps.data.status"
+                          :severity="getSeverity(slotProps.data)" />
+                 </template>
+             </Column>
+
+             <Column field="amount" header="Amount"
+                     style="width:150px;"
+                     :sortable="true" />
+
+             <Column field="tax" header="Tax"
+                     v-if="store.isViewLarge()"
+                     style="width:150px;"
+                     :sortable="true">
+
+             </Column>
+
+             <Column field="total_amount" header="Total Amount"
+                     v-if="store.isViewLarge()"
+                     style="width:150px;"
+                     :sortable="true" />
 
 
                 <Column field="updated_at" header="Updated"
