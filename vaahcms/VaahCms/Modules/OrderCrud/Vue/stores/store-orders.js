@@ -960,18 +960,27 @@ export const useOrderStore = defineStore({
             }
         },
 
-        updateStatus(item) {
 
-            let params = {
-                status: item.status,
-
+        async updateStatus(item){
+            let query = {
+                id:item.id,
+                status:item.status
+            }
+            let method = 'PUT';
+            let options = {
+                params: query,
+                method: method
             };
-            console.log(params);
-
-            vaah().ajax(
-                this.ajax_url + '/update-status/'+ item.id,
-                params
+            console.log(options);
+            let url = this.ajax_url + '/update-status';
+            await vaah().ajax(
+                url,
+            this.afterUpdateStatus,
+                options,
             );
+        },
+        afterUpdateStatus(data){
+console.log(data);
         },
 
 

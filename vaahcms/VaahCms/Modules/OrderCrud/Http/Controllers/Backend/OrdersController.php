@@ -225,14 +225,13 @@ class OrdersController extends Controller
         }
 
     }
-    public function updateOrderStatus(Request $request, $id)
+
+    //----------------------------------------------------------
+    public function updateOrderStatus(Request $request): array
     {
-//        $response = Order::updateStatus($request, $id);
-//
-//        return response()->json($response);
         try{
-            return Order::updateStatus($request, $id);
-//            return Order::updateStatus($request->input('status'));
+//            dd($request->all());
+            return Order::updateStatus($request);
         }catch (\Exception $e){
             $response = [];
             $response['success'] = false;
@@ -245,7 +244,5 @@ class OrdersController extends Controller
             return $response;
         }
     }
-    //----------------------------------------------------------
-
 
 }

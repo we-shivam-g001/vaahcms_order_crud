@@ -670,36 +670,27 @@ class Order extends Model
         $response['data']['fill'] = $inputs;
         return $response;
     }
-    public static function updateStatus(Request $request, $id){
-        $order = self::findOrFail($id);
 
 
-        $order->status = $request->input('status');
-        dd($order);
-        $order->save();
 
 
-//        return response()->json(['message' => 'Order status updated successfully']);
-        $response['messages'][] = 'Saved successfully.';
-        return $response;
-    }
-//    public static function updateStatus( $id, $status)
-//    {
-//        $order = self::findOrFail($id);
-//
-//        // Check if the provided status is valid
-//        if (in_array($status, ['In stock', 'A few left', 'Out of stock', 'pending', 'processing'])) {
-//            $order->status = $status;
-//            $order->save();
-//
-//            $response['messages'][] = 'Saved successfully.';
-//            return $response;
-//        } else {
-//            // Handle invalid status
-//            $response['errors'][] = 'Invalid status provided.';
-//            return $response;
-//        }
-//    }
+        public static function updateStatus($request): array
+        {
+            $id = $request->id;
+            $status = $request->status;
+
+            $item = self::where('id', $id)->withTrashed()->first();
+            $item->update(['status' => $status]);
+            $item->save();
+
+            $response = self::getItem($item->id);
+            $response['messages'][] = 'Saved successfully.';
+            return $response;
+
+        }
+
+
+
 
 
 
