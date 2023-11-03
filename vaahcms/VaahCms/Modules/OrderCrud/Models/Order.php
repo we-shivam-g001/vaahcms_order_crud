@@ -269,6 +269,16 @@ class Order extends Model
         });
 
     }
+    public function scopeOrderStatusFilter($query, $filter)
+    {
+        if (!isset($filter['status']) || empty($filter['status'])) {
+            return $query;
+        }
+
+        $status_slugs = $filter['status'];
+
+        return $query->whereIn('status', $status_slugs);
+    }
     //-------------------------------------------------
     public static function getList($request)
     {
@@ -276,6 +286,7 @@ class Order extends Model
         $list->isActiveFilter($request->filter);
         $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
+        $list->OrderStatusFilter($request->filter);
 
         $rows = config('vaahcms.per_page');
 

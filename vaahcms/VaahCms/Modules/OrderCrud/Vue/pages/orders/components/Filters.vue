@@ -13,6 +13,20 @@ const store = useOrderStore();
         <Sidebar v-model:visible="store.show_filters"
                  position="right">
 
+            <VhFieldVertical v-if="store.order_status !== ''">
+                <template #label>
+                    <b>By Status:</b>
+                </template>
+                <MultiSelect v-model="store.query.filter.status"
+                             :options="store.order_status"
+                             name="orders-status"
+                             display="chip"
+                             placeholder="Select status"
+                             class="w-full md:w-14rem"
+                />
+            </VhFieldVertical>
+
+
             <VhFieldVertical >
                 <template #label>
                     <b>Sort By:</b>

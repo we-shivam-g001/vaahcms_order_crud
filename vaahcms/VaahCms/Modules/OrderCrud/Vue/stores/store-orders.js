@@ -978,6 +978,7 @@ export const useOrderStore = defineStore({
             this.afterUpdateStatus,
                 options,
             );
+            item.showDropdown = false;
         },
         afterUpdateStatus(data){
 console.log(data);
