@@ -223,6 +223,27 @@ class OrdersController extends Controller
             }
             return $response;
         }
+
+    }
+    public function updateOrderStatus(Request $request, $id)
+    {
+//        $response = Order::updateStatus($request, $id);
+//
+//        return response()->json($response);
+        try{
+            return Order::updateStatus($request, $id);
+//            return Order::updateStatus($request->input('status'));
+        }catch (\Exception $e){
+            $response = [];
+            $response['success'] = false;
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+            return $response;
+        }
     }
     //----------------------------------------------------------
 

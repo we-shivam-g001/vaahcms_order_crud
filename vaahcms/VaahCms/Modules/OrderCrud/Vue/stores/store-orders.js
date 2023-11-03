@@ -958,7 +958,21 @@ export const useOrderStore = defineStore({
             } else {
                 return null;
             }
-        }
+        },
+
+        updateStatus(item) {
+
+            let params = {
+                status: item.status,
+
+            };
+            console.log(params);
+
+            vaah().ajax(
+                this.ajax_url + '/update-status/'+ item.id,
+                params
+            );
+        },
 
 
         //---------------------------------------------------------------------

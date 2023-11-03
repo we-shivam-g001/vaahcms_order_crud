@@ -3,9 +3,9 @@
 Route::group(
     [
         'prefix' => 'backend/ordercrud/orders',
-        
+
         'middleware' => ['web', 'has.backend.access'],
-        
+
         'namespace' => 'Backend',
 ],
 function () {
@@ -71,5 +71,11 @@ function () {
         ->name('vh.backend.ordercrud.orders.item.action');
 
     //---------------------------------------------------------
+//    Route::get('/{id}/update-status', 'OrdersController@updateOrderStatus')
+//        ->name('vh.backend.ordercrud.orders.item.status');
+//    Route::put('/{id}/update-status/{status}', 'OrdersController@updateOrderStatus')
+//        ->name('vh.backend.ordercrud.orders.item.status');
 
+    Route::get('/update-status/{id}', 'OrdersController@updateOrderStatus')
+        ->name('vh.backend.ordercrud.orders.item.status');
 });

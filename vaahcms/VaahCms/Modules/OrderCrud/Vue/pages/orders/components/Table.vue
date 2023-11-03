@@ -59,7 +59,7 @@ function getSeverity(product) {
                                    :options="store.order_status"
                                    v-model="slotProps.data.status"
                                    class="p-dropdown-sm"
-                                   @change="updateStatus(slotProps.data)">
+                                   @change="store.updateStatus(slotProps.data)">
                          </Dropdown>
 
                  </template>
