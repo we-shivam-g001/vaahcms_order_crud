@@ -24,6 +24,7 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
+// store.item.quantity=1;
 
 </script>
 <template>
@@ -166,11 +167,31 @@ const toggleFormMenu = (event) => {
                     <InputNumber class="w-full"
                                  name="orders-price"
                                  data-testid="orders-price"
+                                 @input="store.watchAmount"
                                  v-model="store.item.amount"
                                  inputId="stacked-buttons"
                                  showButtons
                                  mode="currency"
                                  currency="INR"
+                                 style="height: 35px;"
+                    />
+                </VhField>
+<!--                <VhField label="Quantity">-->
+<!--                    <InputNumber class="w-full"-->
+<!--                                 name="orders-quantity"-->
+<!--                                 data-testid="orders-quantity"-->
+<!--                                 v-model="store.item.quantity"-->
+<!--                                 inputId="stacked-buttons"-->
+<!--                                 style="height: 35px;"-->
+<!--                    />-->
+<!--                </VhField>-->
+                <VhField label="Quantity">
+                    <InputNumber class="w-full"
+                                 name="orders-quantity"
+                                 @input="store.updateQuantity"
+                                 data-testid="orders-quantity"
+                                 v-model="store.item.quantity"
+                                 inputId="stacked-buttons"
                                  style="height: 35px;"
                     />
                 </VhField>
@@ -184,6 +205,7 @@ const toggleFormMenu = (event) => {
                                  mode="currency"
                                  currency="INR"
                                  style="height: 35px;"
+                                 readonly
                     />
                 </VhField>
 
@@ -196,6 +218,7 @@ const toggleFormMenu = (event) => {
                                  mode="currency"
                                  currency="INR"
                                  style="height: 35px;"
+                                 readonly
                     />
                 </VhField>
 

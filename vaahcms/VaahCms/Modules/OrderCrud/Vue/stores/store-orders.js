@@ -162,6 +162,15 @@ export const useOrderStore = defineStore({
                   this.item.slug = vaah().strToSlug(name);
               }
           },
+
+        watchAmount(amount) {
+            if (amount || amount.value !== null) {
+                this.item.tax = this.calculateTax(amount.value, this.item.quantity);
+                this.item.total_amount = this.calculateTotal(amount.value, this.item.quantity);
+                console.log(this.item.tax, this.item.total_amount, this.item.quantity);
+            }
+        },
+
         //---------------------------------------------------------------------
         async getAssets() {
 
@@ -915,6 +924,21 @@ export const useOrderStore = defineStore({
 
             this.form_menu_list = form_menu;
 
+        },
+        calculateTax(amount, quantity) {
+            if (amount !== null && quantity !== null) {
+                let tax = (parseFloat(amount) * quantity * 10) / 100;
+                return tax;
+            }
+            return null;
+        },
+
+        calculateTotal(amount, quantity) {
+            if (amount !== null && quantity !== null) {
+                let calculatedAmount = parseFloat(amount) * quantity + this.calculateTax(amount, quantity);
+                return calculatedAmount;
+            }
+            return null;
         },
         //---------------------------------------------------------------------
     }
