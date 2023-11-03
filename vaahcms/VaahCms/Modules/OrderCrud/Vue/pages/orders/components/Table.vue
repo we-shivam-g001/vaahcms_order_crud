@@ -4,6 +4,10 @@ import { useOrderStore } from '../../../stores/store-orders'
 
 const store = useOrderStore();
 const useVaah = vaah();
+
+const toggleDropdown = (slotProps) => {
+    slotProps.data.showDropdown = !slotProps.data.showDropdown;
+};
 function getSeverity(product) {
     switch (product.status) {
         case 'In Stock':
@@ -46,12 +50,18 @@ function getSeverity(product) {
                      {{ prop.data.name }} ({{ prop.data.quantity }})
                  </template>
              </Column>
-             <Column field="status" header="Status"
-                     style="width:150px;"
-                     :sortable="true">
+             <Column field="status" header="Status" style="width:150px;" :sortable="true">
                  <template #body="slotProps">
-                     <Tag :value="slotProps.data.status"
-                          :severity="getSeverity(slotProps.data)" />
+                     <div @click="toggleDropdown(slotProps)">
+                         <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)" />
+                     </div>
+                         <Dropdown v-if="slotProps.data.showDropdown"
+                                   :options="store.order_status"
+                                   v-model="slotProps.data.status"
+                                   class="p-dropdown-sm"
+                                   @change="updateStatus(slotProps.data)">
+                         </Dropdown>
+
                  </template>
              </Column>
 
