@@ -40,17 +40,12 @@ function getSeverity(product) {
             <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
             </Column>
 
-            <Column field="name" header="Name"
-                    :sortable="true">
-
-                <template #body="prop">
-                    <Badge v-if="prop.data.deleted_at"
-                           value="Trashed"
-                           severity="danger"></Badge>
-                    {{prop.data.name}}
-                </template>
-
-            </Column>
+             <Column field="name" header="Name" :sortable="true">
+                 <template #body="prop">
+                     <Badge v-if="prop.data.deleted_at" value="Trashed" severity="danger"></Badge>
+                     {{ prop.data.name }} ({{ prop.data.quantity }})
+                 </template>
+             </Column>
              <Column field="status" header="Status"
                      style="width:150px;"
                      :sortable="true">
@@ -62,19 +57,33 @@ function getSeverity(product) {
 
              <Column field="amount" header="Amount"
                      style="width:150px;"
-                     :sortable="true" />
+                     :class="'text-left'"
+                     :sortable="true">
+
+                 <template #body="props">
+                     &#8377 {{ props.data.amount }}
+                 </template>
+
+             </Column>
 
              <Column field="tax" header="Tax"
                      v-if="store.isViewLarge()"
                      style="width:150px;"
                      :sortable="true">
+                 <template #body="props">
+                     &#8377 {{ props.data.tax }}
+                 </template>
 
              </Column>
 
              <Column field="total_amount" header="Total Amount"
                      v-if="store.isViewLarge()"
                      style="width:150px;"
-                     :sortable="true" />
+                     :sortable="true" >
+                 <template #body="props">
+                     &#8377 {{ props.data.total_amount }}
+                 </template>
+             </Column>
 
 
                 <Column field="updated_at" header="Updated"

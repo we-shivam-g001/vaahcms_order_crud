@@ -21,33 +21,16 @@ onMounted(async () => {
 
 
 //--------form_menu
-// const form_menu = ref();
-// const toggleFormMenu = (event) => {
-//     form_menu.value.toggle(event);
-// };
-//--------/form_menu
-// store.item.quantity=1;
-const form_menu = ref(false);
+const form_menu = ref();
 const toggleFormMenu = (event) => {
-    form_menu.value = !form_menu.value;
+    form_menu.value.toggle(event);
 };
 //--------/form_menu
+store.item.status='processing';
 
-watch(form_menu, (newVal) => {
-    // Do something when form_menu value changes
-});
 
-// const updateTaxAndTotalAmount = () => {
-//     if (store.item.amount !== null && store.item.quantity !== null) {
-//         store.item.tax = (parseFloat(store.item.amount) * store.item.quantity * 10) / 100;
-//         store.item.total_amount = parseFloat(store.item.amount) * store.item.quantity + store.item.tax;
-//     } else {
-//         store.item.tax = null;
-//         store.item.total_amount = null;
-//     }
-// };
 
-// watch(() => [store.item.amount, store.item.quantity], updateTaxAndTotalAmount);
+
 </script>
 <template>
 

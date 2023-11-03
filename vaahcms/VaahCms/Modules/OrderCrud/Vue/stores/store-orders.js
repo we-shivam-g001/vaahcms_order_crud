@@ -176,7 +176,7 @@ export const useOrderStore = defineStore({
             else {
                 this.item.tax=null;
                 this.item.total_amount=null;
-                this.item.quantity=null;
+                // this.item.quantity=null;
 
             }
         },

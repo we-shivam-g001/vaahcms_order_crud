@@ -594,6 +594,8 @@ class Order extends Model
         $rules = array(
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
+            'quantity' => 'required',
+            'amount' => ['required', 'regex:/^\d+(.\d{1,3})?$/'],
         );
 
         $validator = \Validator::make($inputs, $rules);
