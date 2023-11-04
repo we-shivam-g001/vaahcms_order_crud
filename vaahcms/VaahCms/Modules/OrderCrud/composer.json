@@ -1,0 +1,28 @@
+{
+    "name": "vaahcms/ordercrud",
+    "description": "OrderCrud For Backend",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "vaah",
+            "email": "support@vaah.dev"
+        }
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "VaahCms\\Modules\\OrderCrud\\Providers\\OrderCrudServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "VaahCms\\Modules\\OrderCrud\\": ""
+        }
+    }
+}
