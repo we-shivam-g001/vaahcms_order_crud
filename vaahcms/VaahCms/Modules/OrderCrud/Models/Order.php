@@ -714,7 +714,46 @@ class Order extends Model
 
         }
 
+    public static function bulkChangeStatus($request):array
+    {
+        $inputs = $request->all();
 
+        $rules = array(
+            'status' => 'required',
+        );
+
+        $messages = array(
+            'status.required' => 'Action status is required',
+        );
+
+
+        $validator = \Validator::make($inputs, $rules, $messages);
+        if ($validator->fails()) {
+
+            $errors = errorsToArray($validator->errors());
+            $response['success'] = false;
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        if (isset($inputs['items'])) {
+            $items_id = collect($inputs['items'])
+                ->pluck('id')
+                ->toArray();
+        }
+
+        $items = self::whereIn('id', $items_id)
+            ->withTrashed();
+
+        $items->update(['status' => $inputs['status']]);
+
+        $response['success'] = true;
+        $response['data'] = true;
+        $response['messages'][] = 'Action was successful.';
+
+        return $response;
+
+    }
 
 
 

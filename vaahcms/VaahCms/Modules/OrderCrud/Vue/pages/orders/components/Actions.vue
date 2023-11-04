@@ -76,19 +76,18 @@ const toggleBulkMenuStatus = (event) => {
             </div>
             <!--/left-->
 <div>
-    <Button
-        type="button"
-        @click="toggleBulkMenuStatus"
-        data-testid="orders-actions-bulk-status"
-        aria-haspopup="true"
-        aria-controls="bulk_menu_status"
-        class="ml-1 p-button-sm bg-indigo-100">
 
-        <i class="pi pi-ellipsis-h"></i>
-    </Button>
-    <Menu ref="bulk_menu_status"
-          :model="store.list_bulk_menu_status"
-          :popup="true" />
+    <div>
+        <Dropdown
+            :options="store.order_status"
+
+
+            v-model="store.change_status_text"
+            v-if="store.show_status_dropdown"
+            placeholder="Select Status"
+            @change="store.bulkChangeStatus"
+        />
+    </div>
 </div>
             <!--right-->
             <div >
@@ -99,6 +98,19 @@ const toggleBulkMenuStatus = (event) => {
 
                     <div class="col-12">
                         <div class="p-inputgroup ">
+                            <Button  v-if="store.show_status_dropdown"
+                                type="button"
+                                @click="toggleBulkMenuStatus"
+                                data-testid="orders-actions-bulk-status"
+                                aria-haspopup="true"
+                                aria-controls="bulk_menu_status"
+                                class="ml-1 p-button-sm bg-indigo-100">
+
+                                <i class="pi pi-ellipsis-h"></i>
+                            </Button>
+                            <Menu ref="bulk_menu_status"
+                                  :model="store.list_bulk_menu_status"
+                                  :popup="true" />
 
                             <InputText v-model="store.query.filter.q"
                                        @keyup.enter="store.delayedSearch()"
