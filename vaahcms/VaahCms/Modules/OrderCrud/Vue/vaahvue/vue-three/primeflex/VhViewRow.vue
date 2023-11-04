@@ -23,6 +23,23 @@ const props = defineProps({
     }
 })
 
+const getStatusSeverity = (status) => {
+    if (status === 'processing') {
+        return 'warning';
+    } else if (status === 'pending') {
+        return 'primary';
+    } else if (status === 'In stock') {
+        return 'success';
+    } else if (status === 'A few left') {
+        return 'warning';
+    }else if (status === 'Out of stock') {
+        return 'danger';
+    }
+    else {
+        return 'warning';
+    }
+};
+
 //['label', 'value', 'type']
 
 </script>
@@ -46,6 +63,22 @@ const props = defineProps({
 
             </td>
         </template>
+
+        <template v-else-if="type === 'status'">
+            <td colspan="2">
+                <template v-if="typeof value === 'string' && value !== null">
+                    <Tag :severity="getStatusSeverity(value)">{{ value }}</Tag>
+                </template>
+            </td>
+        </template>
+        <template v-else-if="type === 'amount'">
+            <td colspan="2">
+                <template v-if="typeof value === 'string' && value !== null">
+                    <i class="fas fa-rupee-sign"></i> {{ value }}
+                </template>
+            </td>
+        </template>
+
         <template v-else-if="type==='yes-no'">
             <td colspan="2">
                 <Tag value="Yes" v-if="value===1" severity="success"></Tag>

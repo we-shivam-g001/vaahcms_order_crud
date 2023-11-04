@@ -18,6 +18,8 @@ function getSeverity(product) {
             return 'danger';
             case 'pending':
             return 'info';
+            case 'processing':
+                return 'warning'
         default:
             return null;
     }
@@ -53,12 +55,12 @@ function getSeverity(product) {
              <Column field="status" header="Status" style="width:150px;" :sortable="true">
                  <template #body="slotProps">
                      <div @click="toggleDropdown(slotProps)">
-                         <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)" />
+                         <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)" class="status-tag" />
                      </div>
                          <Dropdown v-if="slotProps.data.showDropdown"
                                    :options="store.order_status"
                                    v-model="slotProps.data.status"
-                                   class="p-dropdown-sm"
+                                   class="p-dropdown-sm status-dropdown"
                                    @change="store.updateStatus(slotProps.data)">
                          </Dropdown>
 
@@ -184,3 +186,14 @@ function getSeverity(product) {
     </div>
 
 </template>
+
+<style scoped>
+.status-tag {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+.status-dropdown {
+    width: 100%;
+}
+</style>
