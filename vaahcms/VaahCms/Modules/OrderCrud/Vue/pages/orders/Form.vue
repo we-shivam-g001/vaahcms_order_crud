@@ -26,7 +26,7 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
-store.item.status='processing';
+
 
 
 
