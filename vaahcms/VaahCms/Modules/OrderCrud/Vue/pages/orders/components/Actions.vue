@@ -76,7 +76,6 @@ const toggleBulkMenuStatus = (event) => {
             </div>
             <!--/left-->
 <div>
-
     <div>
         <Dropdown
             :options="store.order_status"
@@ -88,6 +87,7 @@ const toggleBulkMenuStatus = (event) => {
             @change="store.bulkChangeStatus"
         />
     </div>
+
 </div>
             <!--right-->
             <div >
@@ -104,7 +104,7 @@ const toggleBulkMenuStatus = (event) => {
                                 data-testid="orders-actions-bulk-status"
                                 aria-haspopup="true"
                                 aria-controls="bulk_menu_status"
-                                class="ml-1 p-button-sm bg-indigo-100">
+                                class="ml-1 p-button-sm bg-pink-900">
 
                                 <i class="pi pi-ellipsis-h"></i>
                             </Button>

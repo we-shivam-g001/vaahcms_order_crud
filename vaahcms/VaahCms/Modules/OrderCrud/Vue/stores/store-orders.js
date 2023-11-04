@@ -329,6 +329,7 @@ export const useOrderStore = defineStore({
             if(data)
             {
                 this.action = vaah().clone(this.empty_action);
+                this.show_status_dropdown=false;
                 await this.getList();
             }
         },
@@ -1001,9 +1002,9 @@ export const useOrderStore = defineStore({
         },
         toggleChangeStatus(){
             if (this.action.items.length < 1) {
-                vaah().toastErrors(['Select records']);
-                this.show_status_dropdown = false;
-                return false;
+                // vaah().toastErrors(['Select records']);
+                this.show_status_dropdown = true;
+                return true;
             }
         },
         bulkChangeStatus(status){
@@ -1067,7 +1068,7 @@ export const useOrderStore = defineStore({
         },
         afterUpdateStatus(data){
 
-                this.show_status_dropdown = false;
+
 
 console.log(data);
         },
