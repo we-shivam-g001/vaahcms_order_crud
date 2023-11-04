@@ -52,7 +52,7 @@ function getSeverity(product) {
                      {{ prop.data.name }} ({{ prop.data.quantity }})
                  </template>
              </Column>
-             <Column field="status" header="Status" style="width:150px;" :sortable="true">
+             <Column field="status" header="Status" style="width:200px;" :sortable="true">
                  <template #body="slotProps">
                      <div @click="toggleDropdown(slotProps)">
                          <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)" class="status-tag" />
@@ -66,6 +66,7 @@ function getSeverity(product) {
 
                  </template>
              </Column>
+             
 
              <Column field="amount" header="Amount"
                      style="width:150px;"
