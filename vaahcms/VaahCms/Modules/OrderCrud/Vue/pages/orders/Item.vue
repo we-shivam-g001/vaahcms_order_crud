@@ -163,6 +163,28 @@ const toggleItemMenu = (event) => {
                                        type="yes-no"
                             />
                         </template>
+                        <template v-else-if="column === 'status'">
+                            <VhViewRow :label="column"
+                                       :value=store.item.status
+                                       type="status"
+                            />
+                        </template>
+                        <template v-else-if="column === 'amount'">
+                            <VhViewRow :label="column"
+                                       :value=store.item.amount
+                                       type="amount"
+                            />
+                        </template> <template v-else-if="column === 'tax'">
+                            <VhViewRow :label="column"
+                                       :value=store.item.tax
+                                       type="amount"
+                            />
+                        </template> <template v-else-if="column === 'total_amount'">
+                            <VhViewRow :label="column"
+                                       :value=store.item.total_amount
+                                       type="amount"
+                            />
+                        </template>
 
                         <template v-else>
                             <VhViewRow :label="column"
