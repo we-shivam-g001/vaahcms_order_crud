@@ -33,6 +33,9 @@ function () {
 
     Route::put('/update-status','OrdersController@updateOrderStatus')
         ->name('vh.backend.ordercrud.orders.list.status');
+
+    Route::put('/bulk-change-status','OrdersController@bulkChangeStatus')
+        ->name('vh.backend.ordercrud.orders.bulk-change-status');
     /**
      * Fill Form Inputs
      */

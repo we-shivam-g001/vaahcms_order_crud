@@ -67,7 +67,10 @@ export const useOrderStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
-        order_status:['In stock','A few left','Out of stock','pending','processing']
+        order_status:['In stock','A few left','Out of stock','pending','processing'],
+        change_status_text:null,
+
+        show_status_dropdown:false,
     }),
     getters: {
 
@@ -296,6 +299,7 @@ export const useOrderStore = defineStore({
 
             if(!this.isListActionValid())
             {
+                this.show_status_dropdown=false;
                 return false;
             }
 
@@ -734,34 +738,46 @@ export const useOrderStore = defineStore({
                         this.confirmDelete()
                     }
                 },
+                {
+                    separator: true
+                },
+                {
+                    label: 'Change Status',
+                    icon: 'pi pi-sync',
+                    command: async () => {
+                        this.show_status_dropdown = true;
+                        this.toggleChangeStatus()
+                    }
+                },
+
             ]
 
         },
         getListBulkStatus(){
           this.list_bulk_menu_status=[
               {
-                  label:'Mark Status as In Stock',
+                  label:'Mark All Status as In Stock',
                   command:async ()=>{
                       await this.listAction('In-stock')
                   },
 
               },
               {
-                  label:'Mark Status as Out of Stock',
+                  label:'Mark All Status as Out of Stock',
                   command:async ()=>{
                       await this.listAction('Out-of-Stock')
                   },
 
               },
               {
-                  label:'Mark Status as pending',
+                  label:'Mark All Status as pending',
                   command:async ()=>{
                       await this.listAction('pending')
                   },
 
               },
               {
-                  label:'Mark Status as Processing',
+                  label:'Mark All Status as Processing',
                   command:async ()=>{
                       await this.listAction('Processing')
                   },
@@ -983,6 +999,41 @@ export const useOrderStore = defineStore({
             this.form_menu_list = form_menu;
 
         },
+        toggleChangeStatus(){
+            if (this.action.items.length < 1) {
+                vaah().toastErrors(['Select records']);
+                this.show_status_dropdown = false;
+                return false;
+            }
+        },
+        bulkChangeStatus(status){
+            console.log(this.action.items,status);
+            let query = {
+                items:this.action.items,
+                status:status.value
+            }
+            let method = 'PUT';
+            let options = {
+                params: query,
+                method: method
+            };
+            let url = this.ajax_url + '/bulk-change-status';
+            vaah().ajax(
+                url,
+                this.afterBulkChangeStatus,
+                options
+            );
+
+        },
+        //---------------------------------------------------------------------
+        async afterBulkChangeStatus(data){
+            if(data){
+                this.show_status_dropdown=false;
+                this.action = vaah().clone(this.empty_action);
+                await this.getList();
+            }
+        },
+
 
         updateTaxAndTotalAmount(amount, quantity) {
             if (!isNaN(amount) && !isNaN(quantity)) {
@@ -1015,6 +1066,9 @@ export const useOrderStore = defineStore({
             item.showDropdown = false;
         },
         afterUpdateStatus(data){
+
+                this.show_status_dropdown = false;
+
 console.log(data);
         },
 
