@@ -718,6 +718,8 @@ class Order extends Model
     {
         $inputs = $request->all();
 
+
+
         $rules = array(
             'status' => 'required',
         );
@@ -744,6 +746,12 @@ class Order extends Model
 
         $items = self::whereIn('id', $items_id)
             ->withTrashed();
+//        dd($items_id);
+        if (empty($items_id)) {
+            $response['success'] = false;
+            $response['errors'][] = 'select a record';
+            return $response;
+        }
 
         $items->update(['status' => $inputs['status']]);
 
