@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+include("frontend/routes-auth.php");
 
 Route::group(
     [

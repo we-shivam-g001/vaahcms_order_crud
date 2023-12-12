@@ -26,8 +26,19 @@
 
                 <p class="subtitle">Welcome Page.</p>
 
+
             </div>
+
         </section>
+    <section class="footer">
+        <a href="{!! config('settings.global.link_github') !!}">
+            <i class="fab fa-github"></i> Link to GitHub
+        </a>
+        {!! config('settings.global.copyright_year'); !!}
+{{--        <a href="{!! config('settings.global.copyright_link'); !!}">link</a>--}}
+        {!! config('settings.global.signup_page_visibility'); !!}
+
+    </section>
 
 </div>
 @endsection

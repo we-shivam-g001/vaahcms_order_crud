@@ -4,11 +4,11 @@
         {!! config('settings.global.script_after_head_start') !!}
 
         @if(isset($title) && $title)
-            <title>{{$title}}</title>
+            <title>{{$title}} </title>
         @elseif(isset($data) && (is_array($data) || is_object($data)) && is_subclass_of($data, 'Illuminate\Database\Eloquent\Model'))
             {!! get_field($data, 'seo-meta-tags') !!}
         @else
-            <title>MyTheme</title>
+            <title> {!! config('settings.global.site_title'); !!}</title>
         @endif
 
         <meta name="csrf-token" id="_token" content="{{ csrf_token() }}">
@@ -58,6 +58,8 @@
         <script src="https://unpkg.com/axios@0.21.1/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
         <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+        <script src="{{vh_theme_assets_url("MyTheme", "build/script.js")}}"></script>
+
 
         @yield('vaahcms_extend_frontend_scripts')
 
