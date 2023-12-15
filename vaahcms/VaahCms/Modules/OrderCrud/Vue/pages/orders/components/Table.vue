@@ -24,7 +24,7 @@ function getSeverity(product) {
             return null;
     }
 }
-//
+
 </script>
 
 <template>
