@@ -24,7 +24,7 @@ function getSeverity(product) {
             return null;
     }
 }
-
+//
 </script>
 
 <template>
@@ -66,7 +66,7 @@ function getSeverity(product) {
 
                  </template>
              </Column>
-             
+
 
              <Column field="amount" header="Amount"
                      style="width:150px;"
